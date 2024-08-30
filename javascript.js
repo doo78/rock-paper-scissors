@@ -1,5 +1,6 @@
 let humanScore = 0;
 let computerScore = 0;
+let finish = false;
 
 const options = ["rock", "paper", "scissors"];
 
@@ -16,49 +17,90 @@ function getHumanChoice(){
 }
 
 function playRound(humanChoice, computerChoice){
-    if (humanChoice === "rock" && computerChoice == "scissors"){
-        console.log("You win!")
-        humanScore++;
-    }
-    else if (humanChoice === "paper" && computerChoice == "rock"){
-        console.log("You win!")
-        humanScore++;
-    }
-    else if (humanChoice === "scissors" && computerChoice == "paper"){
-        console.log("You win!")
-        humanScore++;
-    }
-    else if (humanChoice === "scissors" && computerChoice == "rock"){
-        console.log("You lose!")
-        computerScore++;
-    }
-    else if (humanChoice === "rock" && computerChoice == "paper"){
-        console.log("You lose!")
-        computerScore++;
-    }
-    else if (humanChoice === "paper" && computerChoice == "scissors"){
-        console.log("You lose!")
-        computerScore++;
-    }
-    else{
-        console.log("It's a draw.")
+
+    if (finish === false){
+        humanChoice = humanChoice.toLowerCase();
+
+        let humanScoreDisplay = document.querySelector("#humanScore");
+        let computerScoreDisplay = document.querySelector("#computerScore");
+        let outcome = document.querySelector("#outcome")
+
+        if (humanChoice === "rock" && computerChoice == "scissors"){
+            outcome.textContent = "You win!";
+            humanScore++;
+            humanScoreDisplay.textContent = "Your score: " + humanScore;
+        }
+        else if (humanChoice === "paper" && computerChoice == "rock"){
+            outcome.textContent = "You win!";
+            humanScore++;
+            humanScoreDisplay.textContent = "Your score: " + humanScore;
+        }
+        else if (humanChoice === "scissors" && computerChoice == "paper"){
+            outcome.textContent = "You win!";
+            humanScore++;
+            humanScoreDisplay.textContent = "Your score: " + humanScore;
+        }
+        else if (humanChoice === "scissors" && computerChoice == "rock"){
+            outcome.textContent = "You lose!";
+            computerScore++;
+            computerScoreDisplay.textContent = "Computer score: " + computerScore;
+        }
+        else if (humanChoice === "rock" && computerChoice == "paper"){
+            outcome.textContent = "You lose!";
+            computerScore++;
+            computerScoreDisplay.textContent = "Computer score: " + computerScore;
+        }
+        else if (humanChoice === "paper" && computerChoice == "scissors"){
+            outcome.textContent = "You lose!";
+            computerScore++;
+            computerScoreDisplay.textContent = "Computer score: " + computerScore;
+        }
+        else{
+            outcome.textContent = "It's a draw!";
+        }
+
+        if (humanScore == 5 || computerScore == 5){
+            let winner;
+            if (humanScore > computerScore){
+                winner = "You win!";
+            }
+            else{
+                winner = "The computer wins!";
+            }
+
+            outcome.textContent = "Game over! " + winner;
+            finish = true;
+        }
     }
 }
 
+
+const buttons = document.querySelectorAll("button");
+
+// we use the .forEach method to iterate through each button
+buttons.forEach((button) => {
+    // and for each one we add a 'click' listener
+    button.addEventListener("click", () => {
+        let computer = getComputerChoice();
+        console.log(computer);
+      playRound(button.innerText, computer);
+    });
+  });
+
+/*
 function playGame(){
     
-    for (let i = 1; i < 6; i++){
-        console.log("Round" + String(i) + "!")
-        let human = getHumanChoice();
-        let computer = getComputerChoice();
-        console.log("Your move: " + human);
-        console.log("Computer's move: " + computer);
-        playRound(human, computer);
-        console.log("Your score: " + humanScore);
-        console.log("Computer's score: " + computerScore)
-    }
+    let human = getHumanChoice();
+    let computer = getComputerChoice();
+    console.log("Your move: " + human);
+    console.log("Computer's move: " + computer);
+    playRound(human, computer);
+    console.log("Your score: " + humanScore);
+    console.log("Computer's score: " + computerScore)
+
 }
 
 playGame();
+*/
 
 
